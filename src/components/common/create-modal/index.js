@@ -3,6 +3,8 @@ import Button from "../button";
 import { FloatingLabel, Form, InputGroup, Modal } from "react-bootstrap";
 import moment from "moment";
 import { toast } from "react-toastify";
+import PropTypes from "prop-types";
+
 const initialData = { taskName: "", comment: "" };
 
 const CreateModal = ({ open, onHide, submitTask, ...props }) => {
@@ -75,6 +77,12 @@ const CreateModal = ({ open, onHide, submitTask, ...props }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+CreateModal.propTypes = {
+  open: PropTypes.bool,
+  onHide: PropTypes.func,
+  submitTask: PropTypes.func,
 };
 
 export default CreateModal;

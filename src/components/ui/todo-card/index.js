@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 const TodoCard = ({ data }) => {
   return (
@@ -20,4 +21,7 @@ const TodoCard = ({ data }) => {
   );
 };
 
+TodoCard.propTypes = {
+  data: PropTypes.object,
+};
 export default TodoCard;

@@ -1,5 +1,6 @@
 import React from "react";
 import { Button as BootstrapBtn } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 const Button = ({ children, ...rest }) => {
   return (
@@ -7,6 +8,10 @@ const Button = ({ children, ...rest }) => {
       {children}
     </BootstrapBtn>
   );
+};
+
+Button.propTypes = {
+  children: PropTypes.element,
 };
 
 export default Button;
