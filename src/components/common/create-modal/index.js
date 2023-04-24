@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../button";
-import { Form, InputGroup, Modal } from "react-bootstrap";
+import { FloatingLabel, Form, InputGroup, Modal } from "react-bootstrap";
+import moment from "moment";
+import { toast } from "react-toastify";
 
-const CreateModal = ({ open, close, ...props }) => {
+const CreateModal = ({ open, onHide, submitTask, ...props }) => {
+  const [todoData, setTodoData] = useState({ taskName: "", comment: "" });
+
+  const handleSubmit = () => {
+    try {
+      if (!todoData.taskName || !todoData.comment)
+        throw new Error("Please all details");
+      const formattedDate = moment().format("YYYY-MM-DD");
+      const taskDetails = { ...todoData, data: formattedDate };
+      submitTask(taskDetails);
+      onHide();
+    } catch (error) {
+      toast.error(error.toString().slice(7));
+    }
+  };
   return (
     <Modal
-      show={open}
+      onHide={onHide}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -16,26 +32,41 @@ const CreateModal = ({ open, close, ...props }) => {
           Create Your Todo
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="my-auto mx-auto w-50 py-5 px-5">
+      <Modal.Body className="my-auto mx-auto w-80 py-5 px-5">
         <InputGroup size="sm" className="mb-3">
           <InputGroup.Text id="inputGroup-sizing-sm">Task Name</InputGroup.Text>
           <Form.Control
+            value={todoData.taskName}
+            name="taskName"
+            onChange={(e) =>
+              setTodoData((prev) => ({
+                ...prev,
+                [e.target.name]: e.target.value,
+              }))
+            }
             type="text"
             aria-label="Small"
             aria-describedby="inputGroup-sizing-sm"
           />
         </InputGroup>
-        <InputGroup size="sm" className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-sm">Comment</InputGroup.Text>
+        <FloatingLabel controlId="floatingTextarea2" label="Comments">
           <Form.Control
-            type="text"
-            aria-label="Small"
-            aria-describedby="inputGroup-sizing-sm"
+            value={todoData.comment}
+            name="comment"
+            onChange={(e) =>
+              setTodoData((prev) => ({
+                ...prev,
+                [e.target.name]: e.target.value,
+              }))
+            }
+            as="textarea"
+            placeholder="Leave a comment here"
+            style={{ height: "100px" }}
           />
-        </InputGroup>
+        </FloatingLabel>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={close}>Close</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
       </Modal.Footer>
     </Modal>
   );
