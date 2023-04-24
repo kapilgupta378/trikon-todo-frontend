@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useEffect, useState } from "react";
+import Button from "./components/common/button";
+import TodoCard from "./components/ui/todo-card";
+import CreateModal from "./components/common/create-modal";
 function App() {
+  const [todoList, setTodoList] = useState([]);
+  const [openTodoModal, setOpenTodoModal] = useState(false);
+  useEffect(() => {
+    setTodoList([1, 2, 3]);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>TODO APP</h1>
+      <Button className="m-3" onClick={() => setOpenTodoModal(true)}>
+        Add Todo
+      </Button>
+      <div className="d-flex container mt-5  flex-wrap">
+        {todoList.map((_, idx) => {
+          return <TodoCard key={idx} />;
+        })}
+      </div>
+
+      <CreateModal open={openTodoModal} close={() => setOpenTodoModal(false)} />
     </div>
   );
 }
