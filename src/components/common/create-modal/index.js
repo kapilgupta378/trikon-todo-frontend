@@ -3,17 +3,22 @@ import Button from "../button";
 import { FloatingLabel, Form, InputGroup, Modal } from "react-bootstrap";
 import moment from "moment";
 import { toast } from "react-toastify";
+const initialData = { taskName: "", comment: "" };
 
 const CreateModal = ({ open, onHide, submitTask, ...props }) => {
-  const [todoData, setTodoData] = useState({ taskName: "", comment: "" });
+  const [todoData, setTodoData] = useState(initialData);
 
   const handleSubmit = () => {
     try {
       if (!todoData.taskName || !todoData.comment)
         throw new Error("Please all details");
       const formattedDate = moment().format("YYYY-MM-DD");
-      const taskDetails = { ...todoData, data: formattedDate };
+      const taskDetails = { ...todoData, date: formattedDate };
+      // sending data to parent com.
       submitTask(taskDetails);
+      // reset input felid
+      setTodoData(initialData);
+      // closing modal
       onHide();
     } catch (error) {
       toast.error(error.toString().slice(7));
