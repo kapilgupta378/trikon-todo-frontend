@@ -1,14 +1,21 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import Button from "./components/common/button";
-import TodoCard from "./components/ui/todo-card";
 import CreateModal from "./components/common/create-modal";
+import CardList from "./components/ui/card-list";
+import { toast } from "react-toastify";
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [openTodoModal, setOpenTodoModal] = useState(false);
+  console.log(todoList);
   useEffect(() => {
-    setTodoList([1, 2, 3]);
+    setTodoList([]);
   }, []);
+
+  const handleSubmitTask = (data) => {
+    setTodoList((prev) => [...prev, data]);
+    toast.success("Todo added.");
+  };
 
   return (
     <div className="App">
@@ -16,13 +23,12 @@ function App() {
       <Button className="m-3" onClick={() => setOpenTodoModal(true)}>
         Add Todo
       </Button>
-      <div className="d-flex container mt-5  flex-wrap">
-        {todoList.map((_, idx) => {
-          return <TodoCard key={idx} />;
-        })}
-      </div>
-
-      <CreateModal open={openTodoModal} close={() => setOpenTodoModal(false)} />
+      <CardList todoList={todoList} />
+      <CreateModal
+        show={openTodoModal}
+        onHide={() => setOpenTodoModal(false)}
+        submitTask={handleSubmitTask}
+      />
     </div>
   );
 }
