@@ -4,17 +4,26 @@ import Button from "./components/common/button";
 import CreateModal from "./components/common/create-modal";
 import CardList from "./components/ui/card-list";
 import { toast } from "react-toastify";
+import useTodo from "./hooks/useTodo";
 function App() {
-  const [todoList, setTodoList] = useState([]);
+  const {
+    todoList,
+    isTodoLoading,
+    setIsTodoLoading,
+    postTodoAsync,
+    refetchData,
+  } = useTodo();
   const [openTodoModal, setOpenTodoModal] = useState(false);
   console.log(todoList);
-  useEffect(() => {
-    setTodoList([]);
-  }, []);
 
   const handleSubmitTask = (data) => {
-    setTodoList((prev) => [...prev, data]);
-    toast.success("Todo added.");
+    try {
+      postTodoAsync(data);
+      refetchData();
+      toast.success("Todo added.");
+    } catch (error) {
+      setIsTodoLoading(false);
+    }
   };
 
   return (
@@ -23,7 +32,7 @@ function App() {
       <Button className="m-3" onClick={() => setOpenTodoModal(true)}>
         Add Todo
       </Button>
-      <CardList todoList={todoList} />
+      <CardList todoList={todoList} loading={isTodoLoading} />
       <CreateModal
         show={openTodoModal}
         onHide={() => setOpenTodoModal(false)}
