@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 const TodoCard = ({ data }) => {
   return (
@@ -11,10 +12,10 @@ const TodoCard = ({ data }) => {
           Task Name : <span>{data.taskName}</span>
         </p>
         <p>
-          Comment <span>{data.comment}</span>
+          Comment: <span>{data.comment}</span>
         </p>
         <p>
-          Date <span>{data.date}</span>
+          Date: <span>{moment(data.date).format("MMMM Do, YYYY")}</span>
         </p>
       </Card.Body>
     </Card>
