@@ -1,8 +1,13 @@
 import React from "react";
 import TodoCard from "../todo-card";
 import PropTypes from "prop-types";
+import Loading from "../../common/loading";
 
-const CardList = ({ todoList }) => {
+const CardList = ({ todoList, loading }) => {
+  if (loading) {
+    return <Loading />;
+  }
+
   if (todoList.length === 0) {
     // returns when todo list is empty
     return (
@@ -22,5 +27,6 @@ const CardList = ({ todoList }) => {
 
 CardList.propTypes = {
   todoList: PropTypes.array,
+  loading: PropTypes.bool,
 };
 export default CardList;
