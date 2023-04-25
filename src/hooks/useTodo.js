@@ -21,7 +21,6 @@ const useTodo = () => {
   };
 
   const postTodoAsync = async (data) => {
-    debugger;
     setIsTodoLoading(true);
     const response = await postTodo(data);
     setIsTodoLoading(false);

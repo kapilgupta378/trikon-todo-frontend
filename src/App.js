@@ -14,13 +14,12 @@ function App() {
     refetchData,
   } = useTodo();
   const [openTodoModal, setOpenTodoModal] = useState(false);
-  console.log(todoList);
 
-  const handleSubmitTask = (data) => {
+  const handleSubmitTask = async (data) => {
     try {
-      postTodoAsync(data);
+      const response = await postTodoAsync(data);
       refetchData();
-      toast.success("Todo added.");
+      if (response.success) toast.success("Todo added.");
     } catch (error) {
       setIsTodoLoading(false);
     }
