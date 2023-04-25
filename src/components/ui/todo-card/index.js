@@ -15,7 +15,8 @@ const TodoCard = ({ data }) => {
           Comment: <span>{data.comment}</span>
         </p>
         <p>
-          Date: <span>{moment(data.date).format("MMMM Do, YYYY")}</span>
+          Date:{" "}
+          <span>{moment(data.date).format("MMMM Do YYYY, h:mm:ss a")}</span>
         </p>
       </Card.Body>
     </Card>

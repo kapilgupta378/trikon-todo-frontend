@@ -18,12 +18,9 @@ const CardList = ({ todoList, loading }) => {
   }
   return (
     <div className="d-flex container mt-5  flex-wrap">
-      {todoList
-        .slice(0)
-        .reverse()
-        .map((data, idx) => {
-          return <TodoCard key={idx} data={data} />;
-        })}
+      {todoList.map((data, idx) => {
+        return <TodoCard key={idx} data={data} />;
+      })}
     </div>
   );
 };

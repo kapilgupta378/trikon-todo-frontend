@@ -14,7 +14,7 @@ const CreateModal = ({ open, onHide, submitTask, ...props }) => {
     try {
       if (!todoData.taskName || !todoData.comment)
         throw new Error("Please all details");
-      const formattedDate = moment().format("MMMM Do YYYY, h:mm:ss a");
+      const formattedDate = moment().format("YYYY-MM-DD HH:mm:ss").toString();
       const taskDetails = { ...todoData, date: formattedDate };
       // sending data to parent com.
       submitTask(taskDetails);
